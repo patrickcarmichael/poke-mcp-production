@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "poke-mcp-local": {
+      "command": "python",
+      "args": [
+        "/path/to/poke-mcp-production/server.py"
+      ],
+      "env": {
+        "LOG_LEVEL": "INFO",
+        "ENVIRONMENT": "development"
+      }
+    }
+  }
+}

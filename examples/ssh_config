@@ -1,0 +1,30 @@
+# SSH Config Example
+# Add to ~/.ssh/config
+
+Host poke-mcp-tunnel
+    HostName your-server-ip-or-hostname
+    User your-username
+    Port 22
+    IdentityFile ~/.ssh/id_ed25519
+    
+    # Local port forwarding
+    # Forward local port 8000 to Vercel deployment
+    LocalForward 8000 your-app.vercel.app:443
+    
+    # Keep connection alive
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    
+    # Connection multiplexing for better performance
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 10m
+    
+    # Compression
+    Compression yes
+    
+    # Exit on forward failure
+    ExitOnForwardFailure yes
+
+# Usage:
+# ssh -N poke-mcp-tunnel
