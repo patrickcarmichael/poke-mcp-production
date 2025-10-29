@@ -1,0 +1,50 @@
+[project]
+name = "poke-mcp-production"
+version = "1.0.0"
+description = "Production-ready Poke MCP server with authentication, logging, and monitoring"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Patrick Carmichael", email = "patrick@example.com" }
+]
+dependencies = [
+    "httpx>=0.28.1",
+    "mcp[cli]>=1.4.1",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.9.0",
+    "pydantic-settings>=2.5.0",
+    "python-dotenv>=1.0.0",
+    "structlog>=24.4.0",
+    "prometheus-client>=0.21.0",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=5.0.0",
+    "black>=24.8.0",
+    "ruff>=0.6.0",
+    "mypy>=1.11.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 100
+target-version = ['py311']
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
