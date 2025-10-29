@@ -1,0 +1,49 @@
+# Prometheus Configuration for Poke MCP Production
+# Use with Docker Compose or standalone Prometheus
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'poke-mcp-production'
+    environment: 'production'
+
+# Alertmanager configuration (optional)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - 'alertmanager:9093'
+
+# Load rules once and periodically evaluate them
+rule_files:
+  # - "alert_rules.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Poke MCP Server metrics
+  - job_name: 'poke-mcp'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['poke-mcp:8000']
+        labels:
+          service: 'poke-mcp-server'
+    
+  # For Vercel deployment (via SSH tunnel or direct)
+  - job_name: 'poke-mcp-vercel'
+    metrics_path: '/metrics'
+    scheme: https
+    static_configs:
+      - targets: ['your-app.vercel.app']
+        labels:
+          service: 'poke-mcp-server'
+          deployment: 'vercel'
+    # Optional: Add authentication if needed
+    # bearer_token: 'your-api-key'
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service: 'prometheus'
